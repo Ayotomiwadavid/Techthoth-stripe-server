@@ -1,0 +1,28 @@
+{
+  "name": "stripe-server",
+  "version": "1.0.0",
+  "description": "Integrate stripe without having to create a bakend sever nor deploying them just your publishable key and your product/packages prices. -Techthoth",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayotomiwadavid/Techthoth-stripe-server.git"
+  },
+  "author": "Ayotomiwa David (Techthoth)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ayotomiwadavid/Techthoth-stripe-server/issues"
+  },
+  "homepage": "https://github.com/Ayotomiwadavid/Techthoth-stripe-server#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.4",
+    "stripe": "^16.5.0"
+  }
+}
