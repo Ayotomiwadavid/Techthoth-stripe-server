@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Setting up the home route
-app.post("/", async (req, res) => {
+app.post("/create-checkout-session", async (req, res) => {
   try {
     const {
       stripeSecretKey,
@@ -26,7 +26,6 @@ app.post("/", async (req, res) => {
       currency,
     } = req.body;
 
-    // Initialize Stripe with the provided secret key
     const stripe = require('stripe')(stripeSecretKey);
 
     const session = await stripe.checkout.sessions.create({
@@ -48,12 +47,34 @@ app.post("/", async (req, res) => {
       cancel_url: cancelUrl,
     });
 
-    res.json({ url: session.url });
+    // Return the session ID along with the URL
+    res.json({ url: session.url, sessionId: session.id });
   } catch (error) {
     console.error("Error during subscription process:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
+
+//===============================//
+//=====CHECK PAYMENT STATUS=====//
+//=============================//
+app.post("/check-payment-status", async (req, res) => {
+  try {
+    const { stripeSecretKey, sessionId } = req.body;
+
+    const stripe = require('stripe')(stripeSecretKey);
+    
+    // Retrieve the session by ID
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+    // Respond with the payment status
+    res.json({ payment_status: session.payment_status });
+  } catch (error) {
+    console.error("Error checking payment status:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // Start the server
 const PORT = 5001;
